@@ -1,0 +1,52 @@
+[
+    {
+        "title": "Primera tarea",
+        "description": "Probando si está bien la aplicación",
+        "completed": false
+    },
+    {
+        "title": "Todo saliendo bien",
+        "description": "Primera tarea ejecutada con éxito",
+        "completed": false
+    },
+    {
+        "title": "Prueba",
+        "description": "Prueba",
+        "completed": false
+    },
+    {
+        "title": "Prueba prueba",
+        "description": "prueba",
+        "completed": false
+    },
+    {
+        "title": "Prueba completada",
+        "description": "hola",
+        "completed": false
+    },
+    {
+        "title": "Primera tarea",
+        "description": "Probando si está bien la aplicación",
+        "completed": true
+    },
+    {
+        "title": "Todo saliendo bien",
+        "description": "Primera tarea ejecutada con éxito",
+        "completed": true
+    },
+    {
+        "title": "Prueba",
+        "description": "Prueba",
+        "completed": true
+    },
+    {
+        "title": "Prueba prueba",
+        "description": "prueba",
+        "completed": true
+    },
+    {
+        "title": "Prueba completada",
+        "description": "hola",
+        "completed": true
+    }
+]
