@@ -25,11 +25,13 @@ class Constrain(JupyterMixin):
         if self.width is None:
             yield self.renderable
         else:
-            child_options = options.update(width=min(self.width, options.max_width))
+            child_options = options.update_width(min(self.width, options.max_width))
             yield from console.render(self.renderable, child_options)
 
-    def __rich_measure__(self, console: "Console", max_width: int) -> "Measurement":
+    def __rich_measure__(
+        self, console: "Console", options: "ConsoleOptions"
+    ) -> "Measurement":
         if self.width is not None:
-            max_width = min(self.width, max_width)
-        measurement = Measurement.get(console, self.renderable, max_width)
+            options = options.update_width(self.width)
+        measurement = Measurement.get(console, options, self.renderable)
         return measurement

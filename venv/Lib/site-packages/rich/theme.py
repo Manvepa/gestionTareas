@@ -1,5 +1,5 @@
 import configparser
-from typing import Dict, List, IO, Mapping, Optional
+from typing import IO, Dict, List, Mapping, Optional
 
 from .default_styles import DEFAULT_STYLES
 from .style import Style, StyleType
@@ -15,7 +15,9 @@ class Theme:
 
     styles: Dict[str, Style]
 
-    def __init__(self, styles: Mapping[str, StyleType] = None, inherit: bool = True):
+    def __init__(
+        self, styles: Optional[Mapping[str, StyleType]] = None, inherit: bool = True
+    ):
         self.styles = DEFAULT_STYLES.copy() if inherit else {}
         if styles is not None:
             self.styles.update(
@@ -35,7 +37,7 @@ class Theme:
 
     @classmethod
     def from_file(
-        cls, config_file: IO[str], source: str = None, inherit: bool = True
+        cls, config_file: IO[str], source: Optional[str] = None, inherit: bool = True
     ) -> "Theme":
         """Load a theme from a text mode file.
 
@@ -54,17 +56,20 @@ class Theme:
         return theme
 
     @classmethod
-    def read(cls, path: str, inherit: bool = True) -> "Theme":
+    def read(
+        cls, path: str, inherit: bool = True, encoding: Optional[str] = None
+    ) -> "Theme":
         """Read a theme from a path.
 
         Args:
             path (str): Path to a config file readable by Python configparser module.
             inherit (bool, optional): Inherit default styles. Defaults to True.
+            encoding (str, optional): Encoding of the config file. Defaults to None.
 
         Returns:
             Theme: A new theme instance.
         """
-        with open(path, "rt") as config_file:
+        with open(path, encoding=encoding) as config_file:
             return cls.from_file(config_file, source=path, inherit=inherit)
 
 

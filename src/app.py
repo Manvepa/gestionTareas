@@ -1,3 +1,4 @@
+import json
 import streamlit as st
 import os
 from task_manager import TaskManager
@@ -14,23 +15,11 @@ MENU_IMPORTAR_TAREAS = "Importar Tareas"
 def main():
     # Título de la página
     st.set_page_config(page_title="Gestor de Tareas", page_icon="📋", layout="centered")
-    st.markdown("""
-    <style>
-    .css-ffhzg2 {
-        padding-top: 10px;
-        padding-bottom: 10px;
-        background-color: #f4f4f4;
-    }
-    .css-1d391kg {
-        background-color: #4CAF50;
-    }
-    .css-ffhzg2 h1 {
-        font-size: 2.5rem;
-        color: #333;
-        text-align: center;
-    }
-    </style>
-    """, unsafe_allow_html=True)
+    st.markdown("""<style>
+    .css-ffhzg2 { padding-top: 10px; padding-bottom: 10px; background-color: #f4f4f4; }
+    .css-1d391kg { background-color: #4CAF50; }
+    .css-ffhzg2 h1 { font-size: 2.5rem; color: #333; text-align: center; }
+    </style>""", unsafe_allow_html=True)
 
     st.title("Gestor de Tareas 📝")
     
@@ -72,7 +61,9 @@ def agregar_tarea():
     description = st.text_area("Descripción", placeholder="Escribe la descripción de la tarea aquí")
     
     if st.button("Agregar", key="add_task"):
-        if TaskManager.add_task(title, description):
+        if not title or not description:
+            st.error("El título y la descripción son obligatorios.")
+        elif TaskManager.add_task(title, description):
             st.success("Tarea agregada exitosamente", icon="✅")
         else:
             st.error("Error al agregar tarea", icon="❌")
@@ -124,10 +115,19 @@ def exportar_tareas():
     
     if st.button("Exportar", key="export_tasks"):
         filepath = os.path.join('data', filename)
-        if TaskManager.export_tasks(filepath):
+        # Aquí agregarías la lógica para exportar tareas
+        tasks = TaskManager.list_tasks()  # Obtener las tareas desde el TaskManager
+        
+        # Convertir las tareas a un formato JSON adecuado
+        tasks_data = [{"id": task.id, "title": task.title, "description": task.description, "completed": task.completed} for task in tasks]
+        
+        # Guardar el archivo JSON
+        try:
+            with open(filepath, 'w') as f:
+                json.dump(tasks_data, f, indent=4)
             st.success(f"Tareas exportadas a {filepath}", icon="✅")
-        else:
-            st.error("Error al exportar tareas", icon="❌")
+        except Exception as e:
+            st.error(f"Error al exportar tareas: {str(e)}", icon="❌")
 
 def importar_tareas():
     st.subheader("Importar Tareas")
@@ -136,15 +136,12 @@ def importar_tareas():
     if uploaded_file is not None:
         filepath = os.path.join('data', uploaded_file.name)
         
-        # Guardar archivo temporal
         with open(filepath, 'wb') as f:
             f.write(uploaded_file.getbuffer())
         
         if st.button("Importar"):
-            if TaskManager.import_tasks(filepath):
-                st.success("Tareas importadas exitosamente", icon="✅")
-            else:
-                st.error("Error al importar tareas", icon="❌")
+            # Aquí agregarías la lógica para importar tareas
+            pass
 
 if __name__ == "__main__":
     main()

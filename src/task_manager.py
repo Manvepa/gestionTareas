@@ -1,103 +1,72 @@
-import json
-from database import session
+from sqlalchemy.orm import sessionmaker
+from database import get_session
 from models import Task
 
 class TaskManager:
     @staticmethod
     def add_task(title, description):
         try:
-            new_task = Task(title=title, description=description)
-            session.add(new_task)
-            session.commit()
-            return True
+            # Obtener la sesión y realizar las operaciones en una transacción
+            with next(get_session()) as session:
+                new_task = Task(title=title, description=description, completed=False)
+                session.add(new_task)
+                session.commit()  # Commit una vez se agrega la tarea
+                print(f"Tarea agregada con ID: {new_task.id}")  # Depuración
+                return True
         except Exception as e:
-            session.rollback()
             print(f"Error al agregar tarea: {e}")
+            session.rollback()  # Si ocurre un error, hacer rollback
             return False
     
     @staticmethod
     def list_tasks():
-        return session.query(Task).all()
-    
+        try:
+            with next(get_session()) as session:
+                return session.query(Task).all()
+        except Exception as e:
+            print(f"Error al listar tareas: {e}")
+            return []
+
     @staticmethod
     def mark_task_complete(task_id):
         try:
-            task = session.query(Task).get(task_id)
-            if task:
-                task.completed = True
-                session.commit()
-                return True
-            return False
+            with next(get_session()) as session:
+                task = session.query(Task).filter(Task.id == task_id).first()
+                if task and not task.completed:
+                    task.completed = True
+                    session.commit()  # Confirmamos el cambio al marcar como completada
+                    return True
+                return False  # Si la tarea ya está completada o no existe
         except Exception as e:
-            session.rollback()
-            print(f"Error al marcar tarea: {e}")
+            print(f"Error al marcar tarea como completada: {e}")
             return False
-    
+
     @staticmethod
     def delete_task(task_id):
         try:
-            task = session.query(Task).get(task_id)
-            if task:
-                session.delete(task)
-                session.commit()
-                return True
-            return False
+            with next(get_session()) as session:
+                task = session.query(Task).filter(Task.id == task_id).first()
+                if task:
+                    session.delete(task)
+                    session.commit()  # Confirmamos el cambio al eliminar la tarea
+                    print(f"Tarea con ID {task.id} eliminada")  # Depuración
+                    return True
+                return False
         except Exception as e:
-            session.rollback()
             print(f"Error al eliminar tarea: {e}")
             return False
     
     @staticmethod
     def delete_completed_tasks():
         try:
-            session.query(Task).filter(Task.completed == True).delete()
-            session.commit()
-            return True
+            with next(get_session()) as session:
+                # Deleting completed tasks
+                completed_tasks = session.query(Task).filter(Task.completed == True).all()
+                for task in completed_tasks:
+                    session.delete(task)  # Eliminamos cada tarea completada individualmente
+                session.commit()  # Confirmamos los cambios
+                print(f"Tareas completadas eliminadas.")  # Depuración
+                return True
         except Exception as e:
-            session.rollback()
-            print(f"Error al eliminar tareas: {e}")
-            return False
-    
-    @staticmethod
-    def export_tasks(filename):
-        try:
-            tasks = session.query(Task).all()
-            task_list = [
-                {
-                    "title": task.title, 
-                    "description": task.description, 
-                    "completed": task.completed
-                } for task in tasks
-            ]
-            
-            with open(filename, 'w') as f:
-                json.dump(task_list, f, indent=4)
-            return True
-        except Exception as e:
-            print(f"Error al exportar tareas: {e}")
-            return False
-    
-    @staticmethod
-    def import_tasks(filename):
-        try:
-            with open(filename, 'r') as f:
-                task_list = json.load(f)
-            
-            # Limpiar tareas existentes
-            session.query(Task).delete()
-            
-            # Importar nuevas tareas
-            for task_data in task_list:
-                new_task = Task(
-                    title=task_data['title'], 
-                    description=task_data['description'], 
-                    completed=task_data['completed']
-                )
-                session.add(new_task)
-            
-            session.commit()
-            return True
-        except Exception as e:
-            session.rollback()
-            print(f"Error al importar tareas: {e}")
+            print(f"Error al eliminar tareas completadas: {e}")
             return False

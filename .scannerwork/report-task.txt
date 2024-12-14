@@ -2,5 +2,5 @@ projectKey=gestionTareas
 serverUrl=http://localhost:9000
 serverVersion=24.12.0.100206
 dashboardUrl=http://localhost:9000/dashboard?id=gestionTareas
-ceTaskId=74467f18-35bb-444d-a167-76191b40c474
-ceTaskUrl=http://localhost:9000/api/ce/task?id=74467f18-35bb-444d-a167-76191b40c474
+ceTaskId=e9c16855-9c10-4942-9167-b218f1147e60
+ceTaskUrl=http://localhost:9000/api/ce/task?id=e9c16855-9c10-4942-9167-b218f1147e60
