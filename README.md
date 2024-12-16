@@ -25,7 +25,7 @@ Esta es una aplicación de gestión de tareas desarrollada en Python utilizando 
 ### 1. Clonar el Repositorio
 
 ```bash
-git clone https://github.com/tu-usuario/gestion-tareas.git
+git clone https://github.com/Manvepa/gestionTareas
 cd gestion-tareas
 ```
 
@@ -62,8 +62,11 @@ gestion_tareas/
 │   ├── task_manager.py    # Lógica de gestión de tareas
 │   └── app.py             # Interfaz de Streamlit
 │
+├── .scannerwork/         # SonarScanner
 ├── data/                 # Carpeta para almacenar datos
 │   └── tasks.db           # Base de datos SQLite
+├── test/                 # Carpeta para pruebas unitarias de la aplicación
+│   └── test_task_manager.py  # Pruebas unitaria de la lógica de gestión de tareas
 │
 ├── requirements.txt       # Dependencias del proyecto
 └── README.md              # Documentación del proyecto
@@ -80,6 +83,9 @@ source venv/bin/activate
 
 # Ejecutar la aplicación
 streamlit run src/app.py
+
+# Ejecutar pruebas unitarias
+pytest
 ```
 
 ## Uso de la Aplicación
