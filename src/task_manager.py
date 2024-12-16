@@ -69,7 +69,7 @@ class TaskManager:
                 for task in completed_tasks:
                     session.delete(task)  # Eliminamos cada tarea completada individualmente
                 session.commit()  # Confirmamos los cambios
-                print(f"Tareas completadas eliminadas.")  # Depuración
+                print("Tareas completadas eliminadas.")  # Depuración
                 return True
         except Exception as e:
             print(f"Error al eliminar tareas completadas: {e}")
