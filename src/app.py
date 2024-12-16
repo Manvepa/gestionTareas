@@ -2,6 +2,8 @@ import json
 import streamlit as st
 import os
 from task_manager import TaskManager
+from database import get_session
+from models import Task
 
 # Definir constantes
 MENU_AGREGAR_TAREA = "Agregar Tarea"
@@ -114,14 +116,15 @@ def exportar_tareas():
     filename = st.text_input("Nombre del archivo", "tareas_exportadas.json")
     
     if st.button("Exportar", key="export_tasks"):
-        filepath = os.path.join('data', filename)
-        # Aquí agregarías la lógica para exportar tareas
-        tasks = TaskManager.list_tasks()  # Obtener las tareas desde el TaskManager
+        # Verificar que el directorio 'data' exista
+        if not os.path.exists('data'):
+            os.makedirs('data')  # Crear el directorio si no existe
         
-        # Convertir las tareas a un formato JSON adecuado
+        filepath = os.path.join('data', filename)
+        tasks = TaskManager.list_tasks()
+        
         tasks_data = [{"id": task.id, "title": task.title, "description": task.description, "completed": task.completed} for task in tasks]
         
-        # Guardar el archivo JSON
         try:
             with open(filepath, 'w') as f:
                 json.dump(tasks_data, f, indent=4)
@@ -134,14 +137,27 @@ def importar_tareas():
     uploaded_file = st.file_uploader("Selecciona un archivo JSON", type=['json'])
     
     if uploaded_file is not None:
-        filepath = os.path.join('data', uploaded_file.name)
-        
-        with open(filepath, 'wb') as f:
-            f.write(uploaded_file.getbuffer())
-        
+        tasks_data = json.load(uploaded_file)  # Leer el contenido del archivo
+         
         if st.button("Importar"):
-            # Aquí agregarías la lógica para importar tareas
-            pass
+            try:
+                with next(get_session()) as session:
+                    for task_data in tasks_data:
+                        # Verificar si la tarea ya existe, o agregarla si no
+                        existing_task = session.query(Task).filter(Task.id == task_data['id']).first()
+                        if not existing_task:
+                            new_task = Task(
+                                id=task_data['id'], 
+                                title=task_data['title'], 
+                                description=task_data['description'], 
+                                completed=task_data['completed']
+                            )
+                            session.add(new_task)
+                    session.commit()  # Confirmar los cambios
+                    st.success("Tareas importadas correctamente", icon="✅")
+            except Exception as e:
+                st.error(f"Error al importar tareas: {str(e)}", icon="❌")
+
 
 if __name__ == "__main__":
     main()

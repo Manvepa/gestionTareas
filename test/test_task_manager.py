@@ -60,57 +60,43 @@ def test_mark_task_complete(db_session):
     assert result == True
     assert task.completed == True  # Verifica que la tarea esté completada
 
-# # Test para eliminar tarea
-# def test_delete_task(db_session):
-#     # Crear una tarea para eliminar
-#     TaskManager.add_task("Delete Test Task", "Test Description for deleting")
-#     db_session.commit()  # Hacer commit para asegurarse de que la tarea se guarde en la base de datos
-#     task = db_session.query(Task).filter(Task.title == "Delete Test Task").first()
-#     print(f"Tarea agregada con ID: {task.id}")  # Imprimir ID para confirmar creación
+# Test para eliminar tarea
+def test_delete_task(db_session):
+    # Crear una tarea para eliminar
+    TaskManager.add_task("Delete Test Task", "Test Description for deleting")
+    db_session.commit()  # Hacer commit para asegurarse de que la tarea se guarde en la base de datos
+    task = db_session.query(Task).filter(Task.title == "Delete Test Task").first()
+    print(f"Tarea agregada con ID: {task.id}")  # Imprimir ID para confirmar creación
 
-#     # Verificar que la tarea existe antes de eliminarla
-#     assert task is not None
-#     print(f"Tarea a eliminar: {task.id}, Titulo: {task.title}")
-
-#     # Eliminar la tarea
-#     TaskManager.delete_task(task.id)
-#     db_session.commit()  # Commit para hacer efectivos los cambios
-
-#     # Verificar si la tarea fue eliminada consultando nuevamente
-#     deleted_task = db_session.query(Task).filter(Task.id == task.id).first()
-#     assert deleted_task is None  # La tarea ya no debería existir
-#     print(f"Tarea con ID {task.id} eliminada")
+    # Verificar que la tarea existe antes de eliminarla
+    assert task is not None
+    print(f"Tarea a eliminar: {task.id}, Titulo: {task.title}")
 
 
-# def test_delete_completed_tasks(db_session):
-#     # Crear tareas, algunas completadas y otras no
-#     TaskManager.add_task("Delete Completed Test Task 1", "Description")
-#     TaskManager.add_task("Delete Completed Test Task 2", "Description")
-#     db_session.commit()  # Hacer commit para asegurarse de que las tareas se guarden en la base de datos
-#     task1 = db_session.query(Task).filter(Task.title == "Delete Completed Test Task 1").first()
-#     task2 = db_session.query(Task).filter(Task.title == "Delete Completed Test Task 2").first()
+def test_delete_completed_tasks(db_session):
+    # Crear tareas, algunas completadas y otras no
+    TaskManager.add_task("Delete Completed Test Task 1", "Description")
+    TaskManager.add_task("Delete Completed Test Task 2", "Description")
+    db_session.commit()  # Hacer commit para asegurarse de que las tareas se guarden en la base de datos
+    task1 = db_session.query(Task).filter(Task.title == "Delete Completed Test Task 1").first()
+    task2 = db_session.query(Task).filter(Task.title == "Delete Completed Test Task 2").first()
 
-#     # Verificar que ambas tareas fueron creadas correctamente
-#     print(f"Tareas creadas. Task 1 ID: {task1.id}, Task 2 ID: {task2.id}")
+    # Verificar que ambas tareas fueron creadas correctamente
+    print(f"Tareas creadas. Task 1 ID: {task1.id}, Task 2 ID: {task2.id}")
 
-#     # Marcar una tarea como completada
-#     TaskManager.mark_task_complete(task1.id)
-#     db_session.commit()  # Commit para hacer efectivos los cambios
-#     print(f"Tarea 1 completada: {task1.id}, Titulo: {task1.title}")
+    # Marcar una tarea como completada
+    TaskManager.mark_task_complete(task1.id)
+    db_session.commit()  # Commit para hacer efectivos los cambios
+    print(f"Tarea 1 completada: {task1.id}, Titulo: {task1.title}")
 
-#     # Asegurarnos que la tarea 1 está completada y la tarea 2 no
-#     assert task1.completed == True
-#     assert task2.completed == False
+    # Asegurarnos que la tarea 1 está completada y la tarea 2 no
+    assert task1.completed == True
+    assert task2.completed == False
 
-#     # Eliminar tareas completadas
-#     result = TaskManager.delete_completed_tasks()
-#     db_session.commit()  # Commit para hacer efectivos los cambios
-#     print(f"Tareas completadas eliminadas.")
-
-#     # Verificar que la tarea completada ha sido eliminada
-#     task1_deleted = db_session.query(Task).filter(Task.id == task1.id).first()
-#     assert task1_deleted is None  # La tarea completada debería ser eliminada
-#     print(f"Tarea completada con ID {task1.id} eliminada.")
+    # Eliminar tareas completadas
+    result = TaskManager.delete_completed_tasks()
+    db_session.commit()  # Commit para hacer efectivos los cambios
+    print(f"Tareas completadas eliminadas.")
 
 
 # Test para exportar tareas

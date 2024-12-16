@@ -12,19 +12,25 @@
         "completed": false
     },
     {
-        "id": 5,
+        "id": 4,
+        "title": "Delete Test Task",
+        "description": "Test Description for deleting",
+        "completed": false
+    },
+    {
+        "id": 6,
         "title": "Delete Completed Test Task 2",
         "description": "Description",
         "completed": false
     },
     {
-        "id": 6,
+        "id": 7,
         "title": "Export Test Task 1",
         "description": "Description 1",
         "completed": false
     },
     {
-        "id": 7,
+        "id": 8,
         "title": "Export Test Task 2",
         "description": "Description 2",
         "completed": false

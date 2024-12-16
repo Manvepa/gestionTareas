@@ -19,13 +19,16 @@ class TaskManager:
             return False
     
     @staticmethod
-    def list_tasks():
+    def list_tasks(completed=None):
         try:
             with next(get_session()) as session:
-                return session.query(Task).all()
+                if completed is None:
+                    return session.query(Task).all()
+                return session.query(Task).filter(Task.completed == completed).all()
         except Exception as e:
             print(f"Error al listar tareas: {e}")
             return []
+
 
     @staticmethod
     def mark_task_complete(task_id):
@@ -49,7 +52,8 @@ class TaskManager:
                 if task:
                     session.delete(task)
                     session.commit()  # Confirmamos el cambio al eliminar la tarea
-                    print(f"Tarea con ID {task.id} eliminada")  # Depuración
+                    session.refresh(task)
+                    print("Tareas completadas eliminadas.")  # Depuración
                     return True
                 return False
         except Exception as e:
