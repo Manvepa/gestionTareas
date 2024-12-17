@@ -52,7 +52,6 @@ class TaskManager:
                 if task:
                     session.delete(task)
                     session.commit()  # Confirmamos el cambio al eliminar la tarea
-                    session.refresh(task)
                     print("Tareas completadas eliminadas.")  # Depuración
                     return True
                 return False
