@@ -94,30 +94,43 @@ pytest
    - Selecciona "Agregar Tarea" en el menú
    - Introduce el título y descripción de la tarea
    - Haz clic en "Agregar"
+   - [![gestor-Tareas-Uno.png](https://i.postimg.cc/LsRCr4t2/gestor-Tareas-Uno.png)](https://postimg.cc/87KmvSX0)
 
 2. **Listar Tareas**:
    - Selecciona "Listar Tareas"
    - Verás todas las tareas con su estado (✅ completada, ❌ pendiente)
+   - [![gestor-Tareas-Dos.png](https://i.postimg.cc/NfDk58mq/gestor-Tareas-Dos.png)](https://postimg.cc/Yh4WPWdb)
 
 3. **Completar Tarea**:
    - Selecciona "Completar Tarea"
    - Elige la tarea a completar
    - Haz clic en "Marcar como Completada"
+   - [![gestor-Tareas-Tres.png](https://i.postimg.cc/ZRLCVHTJ/gestor-Tareas-Tres.png)](https://postimg.cc/qhzJ78hF)
 
 4. **Eliminar Tarea**:
    - Selecciona "Eliminar Tarea"
    - Elige la tarea a eliminar
    - Haz clic en "Eliminar Tarea"
+   - [![gestor-Tareas-Cinco.png](https://i.postimg.cc/65xBynw0/gestor-Tareas-Cinco.png)](https://postimg.cc/rzjBHdD0)
+  
+5. **Eliminar Tareas Completadas**:
+   - Seleccionar Eliminar Tareas completadas
+   - [![gestor-Tareas-Seis.png](https://i.postimg.cc/wBrpHs0D/gestor-Tareas-Seis.png)](https://postimg.cc/hJVw1hFG)
 
-5. **Exportar Tareas**:
+7. **Exportar Tareas**:
    - Selecciona "Exportar Tareas"
    - Introduce un nombre de archivo
    - Haz clic en "Exportar"
+   - [![gestor-Tareas-Siete.png](https://i.postimg.cc/kgZMcZKQ/gestor-Tareas-Siete.png)](https://postimg.cc/sMYRfTnx)
+   - [![gestor-Tareas-Ocho.png](https://i.postimg.cc/26X3s6Bt/gestor-Tareas-Ocho.png)](https://postimg.cc/TLgRmT0j)
 
-6. **Importar Tareas**:
+8. **Importar Tareas**:
    - Selecciona "Importar Tareas"
    - Sube un archivo JSON con tareas
    - Haz clic en "Importar"
+   - [![gestor-Tareas-Nueve.png](https://i.postimg.cc/6pdzL77t/gestor-Tareas-Nueve.png)](https://postimg.cc/87zhTzB0)
+   - [![gestor-Tareas-Diez.png](https://i.postimg.cc/V63DWXFs/gestor-Tareas-Diez.png)](https://postimg.cc/zbFCJbM4)
+   - [![gestor-Tareas-Once.png](https://i.postimg.cc/wTpm5tgq/gestor-Tareas-Once.png)](https://postimg.cc/kDTGqg2z)
 
 ## Tecnologías Utilizadas
 
