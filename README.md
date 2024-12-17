@@ -94,7 +94,7 @@ pytest
    - Selecciona "Agregar Tarea" en el menú
    - Introduce el título y descripción de la tarea
    - Haz clic en "Agregar"
-[![gestor-Tareas-Uno.png](https://i.postimg.cc/LsRCr4t2/gestor-Tareas-Uno.png)](https://postimg.cc/87KmvSX0)
+[![gestor-Tareas-Uno.png](https://i.postimg.cc/pLffggJH/gestor-Tareas-Uno.png)](https://postimg.cc/BjvPF7zY)
 
 2. **Listar Tareas**:
    - Selecciona "Listar Tareas"
